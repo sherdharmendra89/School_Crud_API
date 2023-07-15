@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AJAX Data</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div id="data-container">
+        <!-- The partial_data.html template will be inserted here -->
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            var page = 1;
+            var hasNext = true;
+            var loadMoreBtn = $("#load-more-btn");
+
+            loadMoreBtn.click(function () {
+                $.ajax({
+                    url: "{% url 'ajaxdata' %}",
+                    type: "GET",
+                    data: {
+                        page: page,
+                        name: "{{ name }}",
+                        city: "{{ city }}"
+                    },
+                    success: function (response) {
+                        $("#data-container").append(response.html);
+                        if (response.has_next) {
+                            page++;
+                        } else {
+                            loadMoreBtn.remove();
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+
+            // Initial load of data
+            loadMoreBtn.trigger('click');
+        });
+    </script>
+</body>
+</html>

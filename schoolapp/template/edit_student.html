@@ -1,0 +1,41 @@
+{% include "header.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+</head>
+<title>Add Student Page</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<body>
+    <center><form method="POST">
+    {%csrf_token%}
+    <div class="container">
+        <h1>Edit Student</h1>
+        <hr>
+    {% for item in studata %}
+        <label for="name"><b>Name:</b></label>
+        <input type="text" value="{{item.name}}" name="name" required>
+    
+        <label for="enrollment"><b>Enrollment:</b></label>
+        <input type="text" value="{{item.enrollment}}"  name="enrollment" required>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="name"><b></b>School:</b></label>
+    <select name="school" id="school" required>
+        {% for school in schools %}
+         <option value="{{school.id}}">{{school.name}}</option>
+         {% endfor %}
+    </select>
+    <div>
+    <br>
+    <button type="submit" class="submit">Submit</button>
+  </div>
+  {% endfor %}
+
+</form></center>
+</body>
+</html>

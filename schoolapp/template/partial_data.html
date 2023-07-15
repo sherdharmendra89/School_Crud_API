@@ -1,0 +1,40 @@
+{% for user in page_obj %}
+    <!-- Display user data here -->
+    <p>{{ user.name }}, {{ user.city }}</p>
+{% endfor %}
+
+{% if has_next %}
+    <button id="load-more-btn" data-page="{{ page_obj.next_page_number|default:1 }}">Load More</button>
+{% endif %}
+
+<script>
+    $(document).ready(function () {
+        var loadMoreBtn = $("#load-more-btn");
+
+        loadMoreBtn.click(function () {
+            var page = loadMoreBtn.data("page");
+            var hasNext = "{{ has_next|default:'False'|lower }}" === 'true';
+
+            $.ajax({
+                url: "{% url 'ajaxdata' %}",
+                type: "GET",
+                data: {
+                    page: page,
+                    name: "{{ name }}",
+                    city: "{{ city }}"
+                },
+                success: function (response) {
+                    $("#data-container").append(response.html);
+                    if (response.has_next) {
+                        loadMoreBtn.data("page", response.next_page);
+                    } else {
+                        loadMoreBtn.remove();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>

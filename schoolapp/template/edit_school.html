@@ -1,0 +1,28 @@
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<body>
+<form method="POST">
+    {%csrf_token%}
+    <div class="container">
+        <center><h1>Edit School</h1>
+        <hr>
+    {% for item in studata %}
+        <label for="name"><b>Name:</b></label>
+        <input type="text" value="{{item.name}}" name="name" required>
+    </div>
+    
+    <div></center>
+        <br>
+        <center><button type="submit" class="submit">Submit</button></center>
+  </div>
+  {% endfor %}
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+{% include "header.html" %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<div class="container">
+  <center><h2>All Data</h2></center>
+
+  <!-- Filter Form -->
+  <form method="GET" action="{% url 'all_data' %}" class="form-inline">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" name="name" class="form-control" value="{{ name }}">
+    </div>
+    <div class="form-group">
+      <label for="city">City:</label>
+      <input type="text" name="city" class="form-control" value="{{ city }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+  </form>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Gender</th>
+        <th>Documents</th>
+        <th>Interests</th> <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in page_obj %}
+        <tr>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.city }}</td>
+          <td>{{ user.state }}</td>
+          <td>{{ user.gender }}</td>
+          <td>{{ user.documents }}</td>
+          <td>{{ user.interests }}</td>
+          <td>
+            <a href="{% url 'update_data' user.id %}" class="btn btn-primary btn-sm">Edit</a>
+            <a href="{% url 'delete_data' user.id %}" class="btn btn-danger btn-sm">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <nav aria-label="Pagination">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if name %}&name={{ name }}{% endif %}{% if city %}&city={{ city }}{% endif %}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <li class="page-item active">
+            <span class="page-link">{{ num }} <span class="sr-only">(current)</span></span>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ num }}{% if name %}&name={{ name }}{% endif %}{% if city %}&city={{ city }}{% endif %}">{{ num }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if name %}&name={{ name }}{% endif %}{% if city %}&city={{ city }}{% endif %}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>

@@ -1,0 +1,171 @@
+{% include "header.html" %}
+
+<br>
+<br>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<div class="center-container">
+    <div class="form-container">
+<Center><h2>Add Data</h2>
+  <hr>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" name="name" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" name="password" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" name="email" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="state">State:</label>
+      <select class="form-control" name="state" id="state" required>
+        <option value="" selected disabled>Select a state</option>
+        <option value="CA">California</option>
+        <option value="NY">New York</option>
+        <!-- Add more state options as needed -->
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="city">City:</label>
+      <select class="form-control" name="city" id="city" required disabled>
+        <option value="" selected disabled>Select a city</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label>Gender:</label><br>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="gender" value="M" required>
+        <label class="form-check-label" for="genderM">Male</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="gender" value="F">
+        <label class="form-check-label" for="genderF">Female</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="gender" value="O">
+        <label class="form-check-label" for="genderO">Other</label>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="interests">Interests:</label><br>
+      <input type="checkbox" id="sports" name="interests[]" value="sports" {% if 'sports' in user.interests %}checked{% endif %}>
+      <label for="sports">Sports</label><br>
+      <input type="checkbox" id="music" name="interests[]" value="music" {% if 'music' in user.interests %}checked{% endif %}>
+      <label for="music">Music</label><br>
+      <input type="checkbox" id="books" name="interests[]" value="books" {% if 'books' in user.interests %}checked{% endif %}>
+      <label for="books">Books</label>
+    </div>
+    
+    <div class="form-group">
+      <label for="documents">Documents:</label><br>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="documents" value="ID">
+        <label class="form-check-label" for="documentsID">Identification Document</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="documents" value="CV">
+        <label class="form-check-label" for="documentsCV">Curriculum Vitae</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="documents" value="CERT">
+        <label class="form-check-label" for="documentsCERT">Certificates</label>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="file">File:</label>
+      <input type="file" class="form-control-file" name="file">
+    </div>
+    
+    <input type="submit" class="btn btn-primary" value="Submit">
+  </form>
+</div>
+</div>
+
+  
+  <script>
+    // Get the state and city select elements
+    const stateSelect = document.getElementById('state');
+    const citySelect = document.getElementById('city');
+  
+    // Define the city options for each state
+    const cityOptions = {
+      CA: ['Los Angeles', 'San Francisco', 'San Diego'],
+      NY: ['New York City', 'Albany', 'Buffalo'],
+      // Add more city options for other states as needed
+    };
+  
+    // Function to update the city options based on the selected state
+    function updateCityOptions() {
+      // Get the selected state value
+      const selectedState = stateSelect.value;
+  
+      // Clear existing city options
+      citySelect.innerHTML = '<option value="" selected disabled>Select a city</option>';
+  
+      // Add new city options based on the selected state
+      if (selectedState in cityOptions) {
+        const cities = cityOptions[selectedState];
+        cities.forEach((city) => {
+          const option = document.createElement('option');
+          option.value = city;
+          option.text = city;
+          citySelect.appendChild(option);
+        });
+        citySelect.disabled = false; // Enable the city select element
+      } else {
+        citySelect.disabled = true; // Disable the city select element if no state is selected
+      }
+    }
+  
+    // Event listener to update the city options when the state selection changes
+    stateSelect.addEventListener('change', updateCityOptions);
+  </script>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  <style>
+    .center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  
+    .form-container {
+      width: 800px;
+      padding: 20px;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+    }
+  
+    .form-group {
+      width: 100%;
+    }
+    
+    .form-group{
+        width: 200px;
+
+    }
+    
+  
+    .submit-button {
+      margin-top: 100px;
+    }
+  </style>
+
+
+<!-- {% include "footer.html" %} -->

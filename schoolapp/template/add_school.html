@@ -1,0 +1,30 @@
+{%include "header.html"%}
+
+
+<!DOCTYPE html>
+<html lang="en">
+</head>
+<title>Add School Page</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<body><center>
+<form method="POST">
+    {%csrf_token%}
+    <div class="container">
+        <center><h1>Add School</h1></center>
+        <hr>
+    
+        <label for="name"><b>Name:</b></label>
+        <input type="text" placeholder="Enter Name" name="name" required>
+    
+    <button type="submit" class="submit">Submit</button>
+  </div>
+
+</form>
+
+</center></body>
+</html>
